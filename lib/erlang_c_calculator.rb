@@ -4,35 +4,35 @@ module ErlangC
   class Calculator
     include Math
 
-    attr_accessor :arrival_rate_per_hr, :serv_time, :curr_num_agents, :wait_time
+    attr_accessor :arrival_rate, :serv_time, :wait_time
   
-    def initialize(arrival_rate_per_hr, serv_time, curr_num_agents, wait_time = 30)
-      @arrival_rate_per_hr, @serv_time, @curr_num_agents, @wait_time = arrival_rate_per_hr, serv_time, curr_num_agents, wait_time
+    def initialize(arrival_rate, serv_time, wait_time = 30)
+      @arrival_rate, @serv_time, @wait_time = arrival_rate, serv_time, wait_time
     end
   
     def traffic_intensity
-      (arrival_rate_per_hr * serv_time).to_f / 3600
+      (arrival_rate * serv_time).to_f
     end
   
-    def agent_occupancy
-      traffic_intensity / curr_num_agents
-    end
-  
-    def erlang_c_probability
+    def erlang_c_probability(m)
       u = traffic_intensity
-      m = curr_num_agents
-      rho = agent_occupancy
 
-      sum = (0..m).inject(0){|sum, k| sum + nth_term(u, k)} # (0..m) excludes m, so sums to m-1
+      return 1 if u > m
 
-      numerator = nth_term(u, m)
-      denominator = numerator + (1 - rho)*sum
+      product = (0..m).inject(1){|prod, j| (prod * j/u) + 1}
+      1.0/((product * (m - u)/u) + 1)
+    end
 
-      numerator/denominator
+    def average_wait(num_agents)
+      (erlang_c_probability(num_agents) * serv_time) / (num_agents - traffic_intensity)
     end
 
     def agents_needed
-      (erlang_c_probability * serv_time) / (wait_time * (1 - agent_occupancy))
+      agents = (traffic_intensity + 1).to_i
+      while average_wait(agents) >= wait_time
+	agents += 1
+      end
+      agents
     end
   
   end
