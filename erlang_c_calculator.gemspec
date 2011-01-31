@@ -1,16 +1,19 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "erlang_c_calculator/version"
+require "erlang_c/version"
 
 Gem::Specification.new do |s|
   s.name        = "erlang_c_calculator"
-  s.version     = ErlangCCalculator::VERSION
+  s.version     = ErlangC::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Chandu Tennety"]
+  s.email       = ["chandu.tennety@janova.us"]
   s.homepage    = "http://rubygems.org/gems/erlang_c_calculator"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Calculate the various terms associated with the Erlang C formula.}
+  s.description = %q{Given the average call arrival rate per second, the average
+	             service time and acceptable wait time, calculate the load,
+	             Erlang C probability that a caller waits, and the number of
+	             agents needed to service the call station.}
 
   s.rubyforge_project = "erlang_c_calculator"
 
