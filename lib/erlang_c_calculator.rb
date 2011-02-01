@@ -1,4 +1,4 @@
-require 'lib/math'
+require 'math'
 
 module ErlangC
   class Calculator
