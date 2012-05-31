@@ -1,19 +1,16 @@
-require 'math'
-
 module ErlangC
   class Calculator
-    include Math
 
     attr_accessor :arrival_rate, :serv_time, :wait_time
-  
+
     def initialize(arrival_rate, serv_time, wait_time = 30)
       @arrival_rate, @serv_time, @wait_time = arrival_rate, serv_time, wait_time
     end
-  
+
     def traffic_intensity
       (arrival_rate * serv_time).to_f
     end
-  
+
     def erlang_c_probability(m)
       u = traffic_intensity
 
@@ -30,10 +27,10 @@ module ErlangC
     def agents_needed
       agents = (traffic_intensity + 1).to_i
       while average_wait(agents) >= wait_time
-	agents += 1
+        agents += 1
       end
       agents
     end
-  
+
   end
 end

@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    erlang_c_calculator (0.1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rspec (1.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  erlang_c_calculator!
+  rspec (~> 1.3)
